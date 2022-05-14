@@ -102,7 +102,7 @@ do
         --
 		if instanceType == "Frame" or instanceType == "frame" then
             local frame = Drawing.new("Square")
-            frame.Visible = false
+            frame.Visible = true
             frame.Filled = true
             frame.Thickness = 0
             frame.Color = Color3.fromRGB(255,255,255)
