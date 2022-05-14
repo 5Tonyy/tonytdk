@@ -97,12 +97,12 @@ do
         local instanceType = instanceType or "Frame"
         local instanceOffset = instanceOffset or {Vector2.new(0,0)}
         local instanceProperties = instanceProperties or {}
-        local instanceHidden = true
+        local instanceHidden = false
         local instance = nil
         --
 		if instanceType == "Frame" or instanceType == "frame" then
             local frame = Drawing.new("Square")
-            frame.Visible = true
+            frame.Visible = false
             frame.Filled = true
             frame.Thickness = 0
             frame.Color = Color3.fromRGB(255,255,255)
