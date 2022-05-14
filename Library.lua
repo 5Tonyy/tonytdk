@@ -97,7 +97,7 @@ do
         local instanceType = instanceType or "Frame"
         local instanceOffset = instanceOffset or {Vector2.new(0,0)}
         local instanceProperties = instanceProperties or {}
-        local instanceHidden = false
+        local instanceHidden = true
         local instance = nil
         --
 		if instanceType == "Frame" or instanceType == "frame" then
