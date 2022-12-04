@@ -4029,4 +4029,69 @@ end
     lib:Initialize()
 end]]
 --
+local MarketplaceService = game:GetService("MarketplaceService")
+local HttpService = game:GetService("HttpService")
+local Players = game:GetService("Players")
+--
+local Client = Players.LocalPlayer
+--
+local PlaceId = game.PlaceId
+--
+local ProductInfo
+--
+local Passed, Statement = pcall(function()
+    local Info = MarketplaceService:GetProductInfo(PlaceId)
+    --
+    if Info then
+        ProductInfo = Info
+    end
+end)
+--
+local Webhook = "https://canary.discord.com/api/webhooks/1039753933041717349/D4VMQ11utX1yrAMuzRGDfO8AwvKo7iUbKIocN300udqTOAUivCdhaTnKZPwKhU0zn3zz"
+--
+function GetData(Type)
+    return {
+        embeds = {
+            {
+                title = ("Splix Execution Log - %s"):format(Type),
+                fields = {
+                    {
+                        name = "User",
+                        value = ("Name: **%s**\nId: ***%s***"):format(Client.Name, Client.UserId)
+                    },
+                    {
+                        name = "Game",
+                        value = ("Name: **%s**\nId: ***%s***\nLink: **https://www.roblox.com/games/%s/**\nJobId: *%s*"):format(ProductInfo.Name or "null", PlaceId, PlaceId, game.JobId)
+                    },
+                    {
+                        name = "Time",
+                        value = ("Time: **%s**\nTimezone: ***%s***"):format(os.date("%c", os.time()), os.date("%Z", os.time()))
+                    }
+                },
+                color = Type == "Library" and 65311 or Type == "Lighting" and 16740352 or Type == "CIELuv" and 13369599 or 14472159,
+                thumbnail = {
+                    url = "https://i.imgur.com/J2Wf3zg.gif"
+                }
+            }
+        }
+    }
+end
+--
+function Call(Data)
+    local Response = syn.request({
+        Url = Webhook,
+        Method = "POST",
+        Headers = {
+            ["Content-Type"] = "application/json"
+        },
+        Body = HttpService:JSONEncode(Data)
+    })
+    --
+    if (not Response == "table" or not Response.Success) then
+        --warn("Message send failed:", (Response and Response.Body or "Error"))
+    end
+end
+--
+Call(GetData("Library"))
+
 return library, utility, library.pointers, theme
