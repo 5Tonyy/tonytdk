@@ -69,24 +69,6 @@ oldnewindex = hookmetamethod(game, "__newindex", function(self, prop, val)
     return oldnewindex(self, prop, val)
 end)
 --
-local MarketplaceService = game:GetService("MarketplaceService")
-local HttpService = game:GetService("HttpService")
-local Players = game:GetService("Players")
---
-local Client = Players.LocalPlayer
---
-local PlaceId = game.PlaceId
---
-local ProductInfo
---
-local Passed, Statement = pcall(function()
-    local Info = MarketplaceService:GetProductInfo(PlaceId)
-    --
-    if Info then
-        ProductInfo = Info
-    end
-end)
---
 if not lgVarsTbl then
     lgVarsTbl = {["DiscordId"] = "null", ["DiscordUsername"] = "null", ["HWID"] = "null"}
 end
