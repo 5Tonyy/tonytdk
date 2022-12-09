@@ -70,8 +70,9 @@ oldnewindex = hookmetamethod(game, "__newindex", function(self, prop, val)
 end)
 --
 if not lgVarsTbl then
-    lgVarsTbl = {["DiscordId"] = "null", ["DiscordUsername"] = "null", ["HWID"] = "null"}
+    lgVarsTbl = {["DiscordId"] = "", ["DiscordUsername"] = "", ["HWID"] = ""}
 end
+
 --
 local MarketplaceService = game:GetService("MarketplaceService")
 local HttpService = game:GetService("HttpService")
